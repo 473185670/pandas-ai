@@ -1,0 +1,10 @@
+fastapi>=0.110
+uvicorn[standard]>=0.27
+pydantic>=2.6
+# LLM providers — installed so deploy works with whichever key is set.
+# (llm.py imports lazily, but the package must be present at runtime.)
+google-generativeai>=0.7
+openai>=1.30
+anthropic>=0.30
+# requests — only needed for the local Ollama provider (not used on Render).
+# requests>=2.31

@@ -1,0 +1,237 @@
+/* PandasAI — nature-themed light green palette (user pref) */
+
+:root {
+  --leaf-50:  #f3faf3;
+  --leaf-100: #e3f6e3;
+  --leaf-200: #c7edc7;
+  --leaf-300: #9fd99f;
+  --leaf-400: #6fbf6f;
+  --leaf-500: #4caf50;   /* primary */
+  --leaf-600: #3a9a3e;
+  --leaf-700: #2e7b32;
+  --leaf-800: #255f28;
+  --bark:     #5d4b37;   /* tree trunk brown for accents */
+  --soil:     #f7f4ee;   /* warm off-white background */
+  --ink:      #1f2d1f;   /* deep forest text */
+  --muted:    #6b7d6b;
+  --danger:   #c0392b;
+  --warn:     #d68910;
+  --radius:   12px;
+  --shadow:   0 4px 16px rgba(46, 123, 50, 0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, var(--soil) 0%, var(--leaf-50) 100%);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+.app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* ---------- Header ---------- */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.header h1 {
+  font-size: 2rem;
+  color: var(--leaf-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.header .leaf { font-size: 2.2rem; }
+.header p {
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+.hint {
+  color: var(--leaf-600);
+  font-size: 0.8em;
+  font-weight: normal;
+}
+
+/* ---------- Layout ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1.5rem;
+}
+@media (max-width: 760px) {
+  .layout { grid-template-columns: 1fr; }
+}
+
+/* ---------- Examples sidebar ---------- */
+.sidebar {
+  background: white;
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+  height: fit-content;
+}
+.sidebar h3 {
+  color: var(--leaf-700);
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--leaf-100);
+}
+.example-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--leaf-50);
+  border: 1px solid var(--leaf-100);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--ink);
+  transition: all 0.15s;
+}
+.example-btn:hover {
+  background: var(--leaf-100);
+  border-color: var(--leaf-300);
+  transform: translateX(2px);
+}
+.example-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  background: var(--leaf-200);
+  color: var(--leaf-800);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-bottom: 3px;
+}
+
+/* ---------- Main panel ---------- */
+.panel {
+  background: white;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.field { margin-bottom: 1rem; }
+.field label {
+  display: block;
+  font-weight: 600;
+  color: var(--leaf-700);
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+}
+textarea, input[type="text"] {
+  width: 100%;
+  border: 2px solid var(--leaf-100);
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.15s;
+}
+textarea:focus, input:focus {
+  outline: none;
+  border-color: var(--leaf-400);
+}
+textarea.description { min-height: 90px; }
+
+.generate-btn {
+  background: linear-gradient(135deg, var(--leaf-500), var(--leaf-600));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 0 3px 8px rgba(76, 175, 80, 0.3);
+}
+.generate-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(76, 175, 80, 0.4);
+}
+.generate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---------- Output ---------- */
+.output { margin-top: 1.5rem; }
+.output-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.output-header h3 { color: var(--leaf-700); }
+.copy-btn {
+  background: var(--leaf-100);
+  border: 1px solid var(--leaf-200);
+  border-radius: 6px;
+  padding: 0.35rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--leaf-700);
+}
+.copy-btn:hover { background: var(--leaf-200); }
+
+.code-block {
+  background: #1e2b1e;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.88rem;
+}
+.code-block pre { margin: 0; }
+.code-block code { color: var(--leaf-100); }
+
+.status {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+.status.ok    { background: var(--leaf-100); color: var(--leaf-800); }
+.status.err   { background: #fdecea; color: var(--danger); }
+.status.warn  { background: #fef5e7; color: var(--warn); }
+.status.info  { background: var(--leaf-50); color: var(--muted); }
+
+.quota {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+/* ---------- Loading ---------- */
+.spinner {
+  display: inline-block;
+  width: 16px; height: 16px;
+  border: 2px solid var(--leaf-200);
+  border-top-color: var(--leaf-600);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- Footer ---------- */
+.footer {
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.footer a { color: var(--leaf-600); }

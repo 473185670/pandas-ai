@@ -1,0 +1,21 @@
+# Render Blueprint — PandasAI backend (FastAPI)
+# Docs: https://render.com/docs/blueprint-spec
+# Deploy: connect this repo (or the pandas_ai/ subfolder) to Render and Render
+# will read this file. If deploying from the parent Arbitrage repo, set the
+# service rootDir to "pandas_ai/backend" in the Render dashboard.
+services:
+  - type: web
+    name: pandasai-backend
+    runtime: python
+    rootDir: backend          # relative to this render.yaml
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      # User MUST set GEMINI_API_KEY (recommended — FREE tier), OPENAI_API_KEY,
+      # or ANTHROPIC_API_KEY in the Render dashboard. Until then = stub mode.
+      - key: CORS_ORIGINS
+        value: "*"            # tighten to your Vercel URL after frontend deploys
+      - key: PYTHON_VERSION
+        value: "3.11.6"
