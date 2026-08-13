@@ -4,6 +4,14 @@
 
 Describe what you want to do with your data in English → get ready-to-run, syntax-validated Python/pandas code.
 
+## 🌿 Live Demo
+
+- **App**: <https://pandasai-frontend.vercel.app> (React frontend, nature-themed UI)
+- **API**: <https://pandasai-backend.vercel.app/docs> (FastAPI Swagger docs)
+- **Health**: <https://pandasai-backend.vercel.app/health> → `{"status":"ok"}`
+
+The deployed backend generates real code via Gemini and validates it with `ast.parse` before returning. No stub. Example: *"Group sales by month, calculate total revenue and average order size"* → ready-to-run pandas with correct datetime handling.
+
 ## Architecture
 
 ```
@@ -59,14 +67,15 @@ npm run dev                # → http://localhost:5173 (proxies /api → backend
 | `/examples` | GET | List built-in few-shot examples |
 | `/health` | GET | Service health check |
 
-## Status (Aug 12, 2026)
+## Status (Aug 14, 2026)
 
 - ✅ Backend scaffold complete + smoke-tested (22 examples, validator catches syntax errors + dangerous ops)
 - ✅ Frontend scaffold complete (nature-themed UI, 8 one-click examples, syntax highlighting, copy button)
-- ⏳ **BLOCKING**: Needs `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` to generate real code (currently returns stub)
-- ⏳ Deploy: Render (backend) + Vercel (frontend)
+- ✅ **LIVE & DEPLOYED**: Backend on Vercel (`pandasai-backend.vercel.app`) + Frontend on Vercel (`pandasai-frontend.vercel.app`)
+- ✅ **Real LLM output**: `/generate` returns Gemini-generated, syntax-validated code (`is_valid=True`, `provider=gemini`)
+- ✅ Dev.to launch article published: <https://dev.to/473185670/i-built-a-natural-language-pandas-code-generator-open-source-free-10i>
 - ⏳ Billing: Stripe ($9/mo Pro tier)
-- ⏳ Launch: Product Hunt + Dev.to + CSDN + RapidAPI
+- ⏳ RapidAPI listing (dual revenue, $0.01/call)
 
 ## Revenue model
 
@@ -74,3 +83,8 @@ npm run dev                # → http://localhost:5173 (proxies /api → backend
 - Pro: $9/mo (unlimited + CSV upload + history)
 - RapidAPI: $0.01/call (dual revenue)
 - Break-even: month 2 (10 paying users)
+
+## License
+
+MIT — see [LICENSE](LICENSE). Free to use, modify, and distribute. Star ⭐ the repo if it saves you syntax-lookup time.
+
