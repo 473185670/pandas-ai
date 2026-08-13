@@ -4,17 +4,32 @@
 deploy-ready; with `GEMINI_API_KEY` set, `/generate` returns real LLM output
 (Gemini 2.5 Flash, FREE tier: 10 RPM / 250 RPD).
 
-## Launch Validation — Orchestrator GO 0.865 (Aug 13 19:11 CST)
+## Launch Validation — Orchestrator GO 0.92 (Aug 13 20:15 CST)
 
-Multi-role venture_incubation validation (`task_4e049fcf`) completed:
-- **m1 business_strategist**: confidence **0.88** (GO)
-- **m2 product_manager**: confidence **0.85** (GO)
-- **overall_confidence**: **0.865** → **GO signal** for launch.
+**Five independent validators all say GO:**
+- `task_842aabe9` venture_incubation: **0.92** (m1 business_strategist 0.92 + m2 product_manager 0.92)
+- `task_4e049fcf` launch-readiness: **0.865** (m1 0.88 + m2 0.85)
+- `task_642b95f1` deploy-risk: **0.914** (m1 0.88 + m2 0.95)
+- pre-mortem `task_d8c95b54`: **0.87** (m1 0.9 + m2 0.85)
+- engagement strategy `task_a120c46e`: **0.95** (m1 0.95 + m2 0.95)
 
-Combined with the prior deploy-risk GO 0.914 (`task_642b95f1`) and pre-mortem
-GO 0.87, three independent validators agree: the PandasAI launch is worth the
-~1-min user card action. No autonomous card-free hosting alternative exists
-(see "Card-free alternatives" below).
+**Consensus: PandasAI launch is worth the ~2 min of USER actions.**
+
+## Deploy Path — Two Independent USER Actions (can be done in parallel)
+
+| Step | Platform | Card needed? | USER action | Time |
+|------|----------|-------------|-------------|------|
+| **Frontend** | Vercel Hobby | **NO** (free tier) | GitHub sudo password (30s) + import repo + Deploy | ~2 min |
+| **Backend** | Render Free | **YES** ($1 temp auth) | Add card + import repo + Deploy | ~5 min |
+
+> **Key insight (Aug 13 20:15 CST)**: Vercel Hobby tier is **FREE with no card**.
+> The Vercel account `473185670@qq.com` is already logged in. The only blocker
+> is GitHub sudo-mode password re-confirmation to install the Vercel GitHub App
+> (a 30-sec USER action at `github.com/apps/vercel/installations/new`).
+> **Frontend can go live BEFORE backend** — deploy Vercel first with
+> `VITE_API_BASE=https://pandasai-backend.onrender.com` (expected Render URL),
+> then deploy Render backend. When Render goes live, the frontend automatically
+> connects. No card-free backend alternative exists (see below).
 
 ## Prerequisites (user, 2 min — the only true blocker)
 1. Get a **Gemini API key** (RECOMMENDED — FREE tier, no credit card needed)
@@ -72,7 +87,16 @@ Render/Vercel can now import this repo. Proceed to Step 1.
 
 ---
 
-## Step 2 — Frontend → Vercel (3 min)
+## Step 2 — Frontend → Vercel (2 min, NO card needed)
+
+> **Vercel Hobby tier is FREE** — no credit card required (unlike Render).
+> The Vercel account `473185670@qq.com` is already logged in (verified Aug 13
+> 20:15 CST). The only blocker is **GitHub sudo-mode password confirmation**
+> to install the Vercel GitHub App — a 30-sec USER action:
+> 1. Go to `github.com/apps/vercel/installations/new`
+> 2. Enter your GitHub password (sudo mode)
+> 3. Click "Install" (grant Vercel access to the `pandas-ai` repo)
+> 4. You're redirected back to Vercel with your repos available.
 
 1. New Project → import the same GitHub repo → **Root Directory** =
    `pandas_ai/frontend`. Vercel auto-detects Vite via `vercel.json`.
