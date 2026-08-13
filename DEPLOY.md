@@ -13,6 +13,41 @@ deploy-ready; with `GEMINI_API_KEY` set, `/generate` returns real LLM output
 
 ---
 
+## Step 0 — Push to GitHub (2 min, the actual deploy gate)
+
+The local repo (`pandas_ai/`) is push-ready: commit `3703538`, clean status,
+`.gitignore` excludes `.env`/`__pycache__`/`node_modules`/`dist`, **zero
+secrets committed**. It currently has **no remote** — these two commands unblock
+everything:
+
+1. **Create an empty repo** at https://github.com/new — name it `pandas-ai`,
+   owner `473185670`, **Private or Public** (Public recommended for Vercel
+   hobby tier). **Do NOT** initialize with README/license/gitignore (the local
+   repo already has its first commit — an initialized remote would force a
+   pull/merge).
+
+2. **Add remote + push** (run from `pandas_ai/`):
+   ```bash
+   git remote add origin https://github.com/473185670/pandas-ai.git
+   git branch -M main
+   git push -u origin main
+   ```
+   If `git` prompts for credentials, use a **Personal Access Token** (classic,
+   `repo` scope) as the password — create one at
+   https://github.com/settings/tokens. (No PAT is stored in this repo; it lives
+   only in your git credential manager.)
+
+3. **Verify**: refresh the GitHub repo page → you should see 26 files +
+   `Initial commit: PandasAI MVP`. Render/Vercel can now import this repo.
+
+> **Why no `gh` CLI?** The `gh` CLI is not installed in this environment and
+> `git config user.name` = `OpenClaw-Agent` (≠ GitHub account `473185670`),
+> so repo creation cannot be automated here — this 2-min step is the one
+> genuine user gate. Everything after it (Steps 1–3) is also user-clicks in
+> Render/Vercel dashboards.
+
+---
+
 ## Step 1 — Backend → Render (5 min)
 
 1. New → Web Service → connect your GitHub repo → set **Root Directory** =
