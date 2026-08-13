@@ -4,6 +4,18 @@
 deploy-ready; with `GEMINI_API_KEY` set, `/generate` returns real LLM output
 (Gemini 2.5 Flash, FREE tier: 10 RPM / 250 RPD).
 
+## Launch Validation — Orchestrator GO 0.865 (Aug 13 19:11 CST)
+
+Multi-role venture_incubation validation (`task_4e049fcf`) completed:
+- **m1 business_strategist**: confidence **0.88** (GO)
+- **m2 product_manager**: confidence **0.85** (GO)
+- **overall_confidence**: **0.865** → **GO signal** for launch.
+
+Combined with the prior deploy-risk GO 0.914 (`task_642b95f1`) and pre-mortem
+GO 0.87, three independent validators agree: the PandasAI launch is worth the
+~1-min user card action. No autonomous card-free hosting alternative exists
+(see "Card-free alternatives" below).
+
 ## Prerequisites (user, 2 min — the only true blocker)
 1. Get a **Gemini API key** (RECOMMENDED — FREE tier, no credit card needed)
    at https://aistudio.google.com/apikey — **or** an OpenAI key (`gpt-4o-mini`)
@@ -29,6 +41,17 @@ Render/Vercel can now import this repo. Proceed to Step 1.
 ---
 
 ## Step 1 — Backend → Render (5 min)
+
+> **Card-free alternatives investigated (Aug 13 19:XX CST) — none viable:**
+> - **Koyeb**: dropped free compute tier post-Mistral-acquisition (only free
+>   Postgres 5h remains; compute = $29/mo Pro + usage). NOT viable.
+> - **Fly.io / Railway / Oracle Cloud / Google Cloud Run**: all now require a
+>   card at signup/enabling (policy changes 2023-2024).
+> - **Vercel Python functions**: would require restructuring FastAPI routes →
+>   per-route serverless functions (no uvicorn); high refactor risk for MVP.
+> - **Conclusion**: Render's $1-temp-auth card is the fastest path. The 18:05
+>   session already logged in via GitHub OAuth + fully configured the service
+>   (name, rootDir, build, start, env) — only the card-on-file gate remains.
 
 1. New → Web Service → connect your GitHub repo → set **Root Directory** =
    `pandas_ai/backend` (Render reads `render.yaml` from `pandas_ai/`; if it
