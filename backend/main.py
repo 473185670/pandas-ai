@@ -17,7 +17,7 @@ from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from few_shot import EXAMPLES, build_prompt
+from few_shot import EXAMPLES, build_prompt, suggest_schema
 from llm import get_provider
 from rate_limit import limiter
 from validator import validate
@@ -61,6 +61,10 @@ class GenerateResponse(BaseModel):
     # differentiated path without breaking the demo or API examples.
     schema_hint_used: bool = False
     quality_tier: str = "guess-mode"
+    # Moat nudge (added Aug 15): when the user skipped schema_hint, suggest
+    # one inferred from few-shot examples so they can re-run in schema-aware
+    # mode. Empty string when no confident match. Non-breaking.
+    schema_suggestion: str = ""
 
 
 class ExampleOut(BaseModel):
@@ -105,6 +109,10 @@ def generate(req: GenerateRequest, x_forwarded_for: Optional[str] = Header(None)
     # Validate
     result = validate(llm_resp.text)
 
+    # Moat nudge: suggest a schema for guess-mode users so they can upgrade
+    # to the schema-aware (differentiated) path on their next call.
+    suggestion = "" if schema_used else suggest_schema(req.description)
+
     return GenerateResponse(
         code=result.code,
         is_valid=result.is_valid,
@@ -115,6 +123,7 @@ def generate(req: GenerateRequest, x_forwarded_for: Optional[str] = Header(None)
         remaining_quota=remaining,
         schema_hint_used=schema_used,
         quality_tier="schema-aware" if schema_used else "guess-mode",
+        schema_suggestion=suggestion,
     )
 
 

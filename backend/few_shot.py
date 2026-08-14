@@ -296,6 +296,28 @@ EXAMPLES: list[FewShotExample] = [
 ]
 
 
+def suggest_schema(description: str) -> str:
+    """Suggest a schema_hint by keyword-matching the request against examples.
+
+    Used to nudge users who skipped schema_hint toward the schema-aware path
+    (the product moat). Returns "" if no confident match.
+    """
+    desc_tokens = {t for t in description.lower().split() if len(t) > 2}
+    if not desc_tokens:
+        return ""
+    best, best_score = "", 0
+    for ex in EXAMPLES:
+        if not ex.schema_hint:
+            continue
+        ex_tokens = {t for t in ex.description.lower().split() if len(t) > 2}
+        score = len(desc_tokens & ex_tokens)
+        # Weighted: overlap fraction of the request tokens
+        if score > best_score:
+            best_score, best = score, ex.schema_hint
+    # Require at least 2 token overlap to avoid noisy suggestions
+    return best if best_score >= 2 else ""
+
+
 def build_prompt(description: str, schema_hint: str = "") -> str:
     """Build the full system + few-shot prompt for the LLM."""
     examples_block = "\n\n".join(
