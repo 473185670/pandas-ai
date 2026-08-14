@@ -55,6 +55,12 @@ class GenerateResponse(BaseModel):
     provider: str
     tokens_used: int = 0
     remaining_quota: int
+    # Moat signal (non-breaking, added Aug 15): makes the schema-aware
+    # differentiator visible. "schema-aware" when user provides column
+    # hints, "guess-mode" when they don't — nudges users toward the
+    # differentiated path without breaking the demo or API examples.
+    schema_hint_used: bool = False
+    quality_tier: str = "guess-mode"
 
 
 class ExampleOut(BaseModel):
@@ -91,6 +97,7 @@ def generate(req: GenerateRequest, x_forwarded_for: Optional[str] = Header(None)
         )
 
     # Build prompt + call LLM
+    schema_used = bool(req.schema_hint)
     prompt = build_prompt(req.description, req.schema_hint or "")
     provider = get_provider()
     llm_resp = provider.generate(prompt)
@@ -106,6 +113,8 @@ def generate(req: GenerateRequest, x_forwarded_for: Optional[str] = Header(None)
         provider=llm_resp.provider,
         tokens_used=llm_resp.tokens_used,
         remaining_quota=remaining,
+        schema_hint_used=schema_used,
+        quality_tier="schema-aware" if schema_used else "guess-mode",
     )
 
 
