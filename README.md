@@ -7,6 +7,20 @@
 
 > Describe what you want to do with your data in English → get **ready-to-run, syntax-validated** Python/pandas code. No stubs, no hallucinated APIs — every output is checked with `ast.parse` and scanned for dangerous ops.
 
+## Not the other pandas-ai? ℹ️
+
+There's a popular library called `pandas-ai` (by sinaptik-ai) that lets you **chat with your DataFrame** in-place. This is a **different tool** — a standalone **web app + API** that generates **copy-pasteable pandas code** you run yourself. Quick comparison:
+
+| | This project | sinaptik-ai/pandas-ai |
+|---|---|---|
+| **What it is** | Web app + REST API | Python library |
+| **Output** | Copy-paste code you control | In-place DataFrame mutation |
+| **Safety** | `ast.parse` + dangerous-op scan before you see it | Runs LLM output directly |
+| **Setup** | Zero — hosted demo, no install | `pip install pandas-ai` |
+| **Best for** | Learning pandas, quick one-off queries | Programmatic chat-with-data pipelines |
+
+**Why use this over ChatGPT/Copilot?** Three things they don't do: (1) **schema-aware** — paste your column names, get code that references them (no re-describing your schema every query); (2) **safety-scanned** — `eval`/`exec`/`os.remove` blocked before copy-paste; (3) **22 curated examples** across 11 categories that suppress common pandas API hallucinations. See [DIFFERENTIATION_STRATEGY.md](DIFFERENTIATION_STRATEGY.md) for the full honest moat analysis.
+
 ## 🚀 Try it now (no signup)
 
 **👉 [pandasai-frontend.vercel.app](https://pandasai-frontend.vercel.app)** — type a request, get runnable pandas code instantly.
