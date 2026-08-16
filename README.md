@@ -1,16 +1,31 @@
 # PandasAI 🌿 — Natural Language to pandas Code
 
-> Rebuild project (Aug 12, 2026). Precedent: FormulaBot $200K/mo. Niche gap: dedicated Python/pandas code generator for developers.
+[![Live Demo](https://img.shields.io/badge/demo-LIVE-22c55e?style=flat-square&logo=vercel)](https://pandasai-frontend.vercel.app)
+[![API](https://img.shields.io/badge/API-docs-0ea5e9?style=flat-square)](https://pandasai-backend.vercel.app/docs)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.10+-3776ab?style=flat-square&logo=python&logoColor=white)](https://www.python.org)
 
-Describe what you want to do with your data in English → get ready-to-run, syntax-validated Python/pandas code.
+> Describe what you want to do with your data in English → get **ready-to-run, syntax-validated** Python/pandas code. No stubs, no hallucinated APIs — every output is checked with `ast.parse` and scanned for dangerous ops.
 
-## 🌿 Live Demo
+## 🚀 Try it now (no signup)
 
-- **App**: <https://pandasai-frontend.vercel.app> (React frontend, nature-themed UI)
-- **API**: <https://pandasai-backend.vercel.app/docs> (FastAPI Swagger docs)
-- **Health**: <https://pandasai-backend.vercel.app/health> → `{"status":"ok"}`
+**👉 [pandasai-frontend.vercel.app](https://pandasai-frontend.vercel.app)** — type a request, get runnable pandas code instantly.
 
-The deployed backend generates real code via Gemini and validates it with `ast.parse` before returning. No stub. Example: *"Group sales by month, calculate total revenue and average order size"* → ready-to-run pandas with correct datetime handling.
+**One-click example** — paste this into the demo:
+
+```
+Group sales by month, calculate total revenue and average order size
+```
+
+→ returns ready-to-run pandas with correct datetime parsing, validated before you see it.
+
+| Resource | Link |
+|----------|------|
+| 🌿 Live app | <https://pandasai-frontend.vercel.app> |
+| 📚 API docs (Swagger) | <https://pandasai-backend.vercel.app/docs> |
+| ❤️ Health | <https://pandasai-backend.vercel.app/health> → `{"status":"ok"}` |
+
+The deployed backend generates real code via Gemini and validates it with `ast.parse` before returning.
 
 ## Architecture
 
